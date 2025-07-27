@@ -1,0 +1,86 @@
+#include <stdio.h>
+#include <math.h>
+int main ()
+{
+	int n,k,i,j,b[6][6],sum=0,t,a,x1,x2;
+	double w,q;
+	char s[10],e[6][6];
+	scanf("%d%d",&n,&k);
+	getchar();
+	for(i=1;i<=n;i++)
+	{
+		scanf("%s",s);
+		for(j=1;j<=n;j++)
+		{
+			if(s[j-1]=='.')
+			b[i][j]=0;
+			else
+			b[i][j]=1;
+			e[i][j]=s[j-1];
+		}
+	}
+	for(i=1;i<=pow(n,k);i++)
+	{
+		for(j=1;j<=pow(n,k);j++)
+		{
+			w=i;
+			q=j;
+			t=k-1;
+			sum=0;
+			x1=ceil(w*1.0/pow(n,t));
+			x2=ceil(q*1.0/pow(n,t));
+		    if(b[x1][x2]==1)
+		    {
+		    	j+=pow(n,t)-1;
+		    	for(a=1;a<=pow(n,t);a++)
+		    	printf("*");
+			}
+			else
+			{
+				t--;
+				while(t>=1)
+				{
+					x1=ceil(w*1.0/pow(n,t));
+			        x2=ceil(q*1.0/pow(n,t));
+			        if(x1>n&&x1%n!=0)
+					x1%=n;
+					if(x2>n&&x2%n!=0)
+					x2%=n;
+					if(x1%n==0)
+					x1=n;
+					if(x2%n==0)
+					x2=n;
+					if(b[x1][x2]==1)
+					{
+						sum=t;
+						break;
+					}
+					t--;
+				}
+				if(sum==0)
+				{
+					x1=i;
+					x2=j;
+					if(x1>n&&x1%n!=0)
+					x1%=n;
+					if(x2>n&&x2%n!=0)
+					x2%=n;
+					if(x1%n==0)
+					x1=n;
+					if(x2%n==0)
+					x2=n;
+					printf("%c",e[x1][x2]);
+				}
+				else
+				{
+					j+=pow(n,sum)-1;
+					for(a=1;a<=pow(n,sum);a++)
+					printf("*");
+				}
+			}
+		}
+		if(i!=pow(n,k))
+		printf("\n");
+	}
+	return 0;
+}

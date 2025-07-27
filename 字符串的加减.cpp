@@ -1,0 +1,81 @@
+#include <stdio.h>
+#include <string.h>
+int main ()
+{
+	int len1,len2,i,j,sum,r,t;
+	char s[500],w[1000],q[1000],e[2000];
+	t=0;
+	while(1)
+	{
+		t++;
+		if(t>=2)
+		gets(s);
+		scanf("%c",&s[t]);
+		if(s[t]==0)
+		break;
+		scanf("%s",w);
+		scanf("%s",q);
+		len1=strlen(w);
+		len2=strlen(q);
+		if(s[t]=='+')
+		{
+			r=0;
+			if(len1<=len2)
+			{
+				for(i=0;w[i]!=0;i++)
+				{
+					e[r]=w[i];
+					r++;
+					e[r]=q[i];
+					r++;
+				}
+				for(i;q[i]!=0;i++)
+				{
+					e[r]=q[i];
+					r++;
+				}
+				e[r]='\0';
+			}
+			else
+			{
+				for(i=0;q[i]!=0;i++)
+				{
+					e[r]=w[i];
+					r++;
+					e[r]=q[i];
+					r++;
+				}
+				for(i;w[i]!=0;i++)
+				{
+					e[r]=w[i];
+					r++;
+				}
+				e[r]='\0';
+			}
+			printf("%s\n",e);
+		}
+		else if(s[t]=='-')
+		{
+			r=0;
+			for(i=0;w[i]!='\0';i++)
+			{
+				sum=0;
+				for(j=0;q[j]!='\0';j++)
+				{
+					if(w[i]==q[j])
+					break;
+					else
+					sum++;
+				}
+				if(sum==len2)
+				{
+					e[r]=w[i];
+					r++;
+				}
+			}
+			e[r]='\0';
+		   printf("%s\n",e);
+		}
+	}
+	return 0;
+}

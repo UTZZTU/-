@@ -1,0 +1,90 @@
+#include <bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+ll t,n,h,f[200010],sum,res1,res2;
+void dfs(ll level,ll num)
+{
+	if(level>n)
+	{
+		sum=max(sum,level-1);
+		return;
+	}
+	if(num>f[level])
+	{
+		num+=f[level]/2;
+		dfs(level+1,num);
+	}
+	else
+	{
+		if(res1)
+		{
+			num*=2;
+			res1--;
+			if(num>f[level])
+			{
+				num+=f[level]/2;
+				dfs(level+1,num);
+				n-=f[level]/2;
+			}
+			num/=2;
+			res1++;
+		}
+		if(res2)
+		{
+			num*=3;
+			res2--;
+			if(num>f[level])
+			{
+				num+=f[level]/2;
+				dfs(level+1,num);
+				n-=f[level]/2;
+			}
+			num/=3;
+			res2++;
+		}
+		if(res1==2)
+		{
+			num*=4;
+			res1=0;
+			if(num>f[level])
+			{
+				num+=f[level]/2;
+				dfs(level+1,num);
+				n-=f[level]/2;
+			}
+			num/=4;
+			res1=2;
+		}
+		if(res1==2&&res2)
+		{
+			num*=12;
+			res1=0,res2--;
+			if(num>f[level])
+			{
+				num+=f[level]/2;
+				dfs(level+1,num);
+				n-=f[level]/2;
+			}
+			num/=12;
+			res1=2,res2++;
+		}
+		sum=max(sum,level-1);
+		return;
+	}
+}
+int main ()
+{
+	scanf("%lld",&t);
+	while(t--)
+	{
+		sum=0;
+		res1=2,res2=1;
+		scanf("%lld%lld",&n,&h);
+		for(int i=1;i<=n;i++)
+		scanf("%lld",&f[i]);
+		sort(f+1,f+1+n);
+		dfs(1,h);
+		cout<<sum<<endl;
+	}
+	return 0;
+}
