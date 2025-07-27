@@ -1,0 +1,62 @@
+#include <stdio.h>
+int main ()
+{
+	int n,i,j,pd=0,m,k,sum=0;
+	m=1;
+	k=0;
+	scanf("%d%d%d",&n,&i,&j);
+	while(pd==0&&n>0)
+	{
+		if(m==i&&j>k&&j<=k+n)
+		{
+			sum+=j-k;
+			pd=1;
+			printf("%d",sum);
+			break;
+		}
+		else
+		{
+			k=k+n;
+			sum+=n;
+		}
+		n-=1;
+		if(k==j&&i>=m&&i<=m+n)
+		{
+			sum+=i-m;
+			pd=1;
+			printf("%d",sum);
+			break;
+		}
+		else
+		{
+			m+=n;
+			sum+=n;
+		}
+		if(i==m&&j<=k&&j>=k-n)
+		{
+			sum+=k-j;
+			pd=1;
+			printf("%d",sum);
+			break;
+		}
+		else
+		{
+			k-=n;
+			sum+=n;
+		}
+		n--;
+		if(k==j&&i<=m&&i>=m-n)
+		{
+			sum+=m-i;
+			pd=1;
+			printf("%d",sum);
+			break;
+		}
+		else
+		{
+			m-=n;
+			sum+=n;
+		}
+	}
+	return 0;
+}

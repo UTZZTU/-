@@ -1,0 +1,197 @@
+#include <bits/stdc++.h>
+using namespace std;
+const double Eps = 1e-8;
+const double PI = atan(-1.0);
+const int N = 1e6+5;
+const int MOD = 1e9+7;
+
+#define pb push_back
+#define pf push_front
+#define cl clear
+#define fi first
+#define se second
+#define bg begin
+#define ed end
+#define sz size
+#define fd find
+#define is insert
+#define PI pair<int,int>
+#define PS pair<string,string>
+#define Um unordered_map
+#define Us unordered_set
+#define Mul multiset<int>
+#define VI vector<int>
+#define VII vector< vector<int> > 
+#define VS vector<string>
+#define VN vector<node>
+#define VP vector< pair<int,int> >
+#define debug(x) cout<<"x"<<'\n'
+#define IOS ios::sync_with_stdio(false);cin.tie(0)
+#define Mem(x) memset(x,0,sizeof x)
+#define no cout<<"NO"<<'\n'
+#define yes cout<<"YES"<<'\n'
+#define pr(x) cout<<x<<'\n'
+
+using ll = long long;
+//using u32 = unsigned int;
+//using u64 = unsigned long long;
+//using i128 = __int128;
+//using u128 = unsigned __int128;
+//using f128 = __float128;
+
+struct Node
+{
+	int num,pos;
+}S[N];
+
+bool Cmp(Node x,Node y)
+{
+	return x.num<y.num;
+}
+
+int qmi(int a,int b,int mod)
+{
+	int res=1;
+	while(b)
+	{
+		if(b&1) res=res*a%mod;
+		b>>=1;
+		a=a*a%mod;
+	}
+	return res;
+}
+
+int qmi(int a,int b)
+{
+	int res=1;
+	while(b)
+	{
+		if(b&1) res=res*a;
+		b>>=1;
+		a=a*a;
+	}
+	return res;
+}
+
+int gcd(int a,int b)
+{
+	return b==0?a:gcd(b,a%b);
+}
+
+//cout<<fixed<<setprecision(x)
+ll n,c[200010],res1,res2,minn,post1[200010],post2[200010];
+string s;
+void solve()
+{
+	minn=0x3f3f3f3f3f3f3f3f;
+	res1=res2=0;
+	cin>>n;
+	cin>>s;
+	for(int i=0;i<n;i++)
+	{
+		cin>>c[i];
+	}
+	for(int i=0;i<n;i++)
+	{
+		if(i&1)
+		{
+			if(s[i]!='1') res1+=c[i];
+		}
+		else
+		{
+			if(s[i]!='0') res1+=c[i];
+		}
+		if(i&1)
+		{
+			if(s[i]!='0') res2+=c[i];
+		}
+		else
+		{
+			if(s[i]!='1') res2+=c[i];
+		}
+		post1[i]=res1;
+		post2[i]=res2;
+	}
+	for(int i=0;i<n-1;i++)
+	{
+		ll t1=0,t2=0;
+		ll num=0;
+		if(s[i]!='0') num+=c[i];
+		if(s[i+1]!='0') num+=c[i+1];
+		if(i-1<0) t1=0;
+		else
+		{
+			if((i-1)&1)
+			{
+				t1=post1[i-1];
+			}
+			else
+			{
+				t1=post2[i-1];
+			}
+		}
+		if(i+2>=n)
+		{
+			t2=0;
+		}
+		else
+		{
+			if((i+2)&1)
+			{
+				t2=post1[n-1]-post1[i+1];
+			}
+			else
+			{
+				t2=post2[n-1]-post2[i+1];
+			}
+		}
+		minn=min(minn,num+t1+t2);
+		num=0;
+		if(s[i]!='1') num+=c[i];
+		if(s[i+1]!='1') num+=c[i+1];
+		if(i-1<0) t1=0;
+		else
+		{
+			if((i-1)&1)
+			{
+				t1=post2[i-1];
+			}
+			else
+			{
+				t1=post1[i-1];
+			}
+		}
+		if(i+2>=n)
+		{
+			t2=0;
+		}
+		else
+		{
+			if((i+2)&1)
+			{
+				t2=post2[n-1]-post2[i+1];
+			}
+			else
+			{
+				t2=post1[n-1]-post1[i+1];
+			}
+		}
+		minn=min(minn,num+t1+t2);
+	}
+	pr(minn);
+}
+int main ()
+{
+//	freopen("input.txt","r",stdin);
+//	freopen("output.txt","w",stdout);
+	IOS;
+	int _=1;
+//	cin>>_;
+	while(_--)
+	{
+		solve();
+	}
+//	fclose(stdin);
+//	fclose(stdout);
+	return 0;
+}
